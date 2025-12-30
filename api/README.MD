@@ -1,5 +1,5 @@
 ** MONGO IN DOCKER
 
 ```
-docker compuse up -d
+docker compose up -d
 ```

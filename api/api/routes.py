@@ -1,10 +1,8 @@
 from flask import Blueprint
-from services import  audio,features
-import librosa
-import numpy as np
+from services import audio_service
+from services import speaker_service
+from flask import request, jsonify
 import os
-from dotenv import load_dotenv
-from pymongo import MongoClient
 
 routes = Blueprint("routes", __name__)
 
@@ -12,49 +10,56 @@ routes = Blueprint("routes", __name__)
 def health():
     return {"status": "ok"}
 
-@routes.route("/register-speaker", methods=["GET"])
+@routes.route("/register-speaker", methods=["POST"])
 def register_speaker():
-    paths = ["tests/a.ogg","tests/b.ogg"]
-    inv_C,mean,std = compute_data(paths)
-    print(mean)
+    if "audio_1" not in request.files or "audio_2" not in request.files:
+        return jsonify({"error": "Envie dois arquivos de áudio"}), 400
 
-    load_dotenv()
+    audio_1 = request.files["audio_1"]
+    audio_2 = request.files["audio_2"]
 
-    mongo_uri = os.getenv("MONGO_URI")
-    mongo_db = os.getenv("MONGO_DB")
-    mongo_user = os.getenv("MONGO_USER")
-    mongo_password = os.getenv("MONGO_PASSWORD")
+    speaker_id = request.form.get("speaker_id")
+    if not speaker_id:
+        return jsonify({"error": "speaker_id é obrigatório"}), 400
 
-    client = MongoClient(
-        f"mongodb://{mongo_user}:{mongo_password}@{mongo_uri}:27017/?authSource=admin"
+    paths = []
+
+    for audio in [audio_1, audio_2]:
+        path = f"/tmp/{audio.filename}"
+        audio.save(path)
+        paths.append(path)
+
+    inv_C, mean, std = audio_service.compute_data(paths)
+
+    speaker_service.register_speaker_service(
+        mean=mean,
+        std=std,
+        inv_C=inv_C,
+        speaker_id=speaker_id
     )
 
-    db = client[mongo_db]
-    speakers = db["speakers"]
-
-    result = speakers.insert_one({
-       "speaker_id": "spk_001",
-    "mean": mean.tolist(),
-    "std": std.tolist(),
-    "invC": inv_C.tolist()
+    return jsonify({
+        "status": "ok",
+        "speaker_id": speaker_id
     })
 
-    return {"status": "mean"}
 
-def compute_data(paths):
-    X_speaker = []
-    coefs = []
-    for path in paths:
-        speech, sr = librosa.load(path, sr=16000, mono=True)
-        _, speech = audio.pre_process_speech(speech)
-            # extract mfccs
-        mfcs = features.extract_mfcc(speech)
-        coefs.append(mfcs)
-    X_speaker = np.hstack(coefs) 
-    mean = X_speaker.mean(axis=1)   # (D,)
-    std  = X_speaker.std(axis=1)    # (D,)
+@routes.route("/identify-speaker", methods=["POST"])
+def identify_speaker():
+    if "audio" not in request.files:
+        return jsonify({"error": "Envie um arquivo de áudio"}), 400
 
-    X_speaker_norm = (X_speaker.T - mean) / (std + 1e-8)
-    C = np.cov(X_speaker_norm.T)
-    invC = np.linalg.inv(C)
-    return invC,mean,std
+    audio_file = request.files["audio"]
+    path = f"/tmp/{audio_file.filename}"
+    audio_file.save(path)
+
+    best_score,best_speaker = speaker_service.identify_speaker(path)
+
+    os.remove(path)
+
+    return jsonify({
+        "speaker_id": best_speaker,
+        "score": round(best_score, 2)
+    })
+
+
