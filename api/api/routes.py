@@ -8,6 +8,21 @@ routes = Blueprint("routes", __name__)
 
 @routes.route("/health", methods=["GET"])
 def health():
+    """
+    Health check da API
+    ---
+    tags:
+      - Health
+    responses:
+      200:
+        description: API está funcionando
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: ok
+    """
     return {"status": "ok"}
 
 @routes.route("/register-speaker", methods=["POST"])
