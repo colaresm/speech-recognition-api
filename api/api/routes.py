@@ -12,6 +12,37 @@ def health():
 
 @routes.route("/register-speaker", methods=["POST"])
 def register_speaker():
+    """
+    Cadastro de um novo locutor
+    ---
+    tags:
+      - Speakers
+    consumes:
+      - multipart/form-data
+    parameters:
+      - name: speaker_id
+        in: formData
+        type: string
+        required: true
+      - name: audio_1
+        in: formData
+        type: file
+        required: true
+      - name: audio_2
+        in: formData
+        type: file
+        required: true
+    responses:
+      200:
+        description: Locutor cadastrado com sucesso
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            speaker_id:
+              type: string
+    """
     if "audio_1" not in request.files or "audio_2" not in request.files:
         return jsonify({"error": "Envie dois arquivos de áudio"}), 400
 
@@ -46,6 +77,30 @@ def register_speaker():
 
 @routes.route("/identify-speaker", methods=["POST"])
 def identify_speaker():
+    """
+    Identificação de locutor
+    ---
+    tags:
+      - Recognition
+    consumes:
+      - multipart/form-data
+    parameters:
+      - name: audio
+        in: formData
+        type: file
+        required: true
+    responses:
+      200:
+        description: Resultado da identificação
+        schema:
+          type: object
+          properties:
+            speaker_id:
+              type: string
+            score:
+              type: number
+    """
+
     if "audio" not in request.files:
         return jsonify({"error": "Envie um arquivo de áudio"}), 400
 
