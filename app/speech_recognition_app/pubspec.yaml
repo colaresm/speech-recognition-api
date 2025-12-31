@@ -39,6 +39,16 @@ dependencies:
   permission_handler: ^12.0.1
   http: ^1.6.0
   fluttertoast: ^9.0.0
+  flutter_launcher_icons: ^0.14.4
+  bloc: ^9.1.0
+  get_it: ^9.2.0
+  flutter_bloc: ^9.1.1
+
+flutter_icons:
+  ios: true
+  android: false
+  image_path: "assets/icon.png"
+  remove_alpha_ios: true
 
 dev_dependencies:
   flutter_test:
@@ -63,8 +73,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
