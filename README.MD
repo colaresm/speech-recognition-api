@@ -2,7 +2,7 @@
 
 This repository stores a Python-based API, containerized with Docker and integrated with MongoDB, focused on speaker recognition. The system extracts voice features using MFCC coefficients and performs identification through the Mahalanobis distance, comparing input audio samples with previously registered speaker profiles.
 
-<p float="center">
+<p align = "center">
   <img src="docs/home.png" width="200" />
   <img src="docs/register.png" width="200" />
   <img src="docs/login.png" width="200" />
