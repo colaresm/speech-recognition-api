@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_recognition_app/domain/dependency_injection.dart';
@@ -36,6 +38,7 @@ class _RegisterSpeakerPageState extends State<RegisterSpeakerPage> {
   bool isLoading = false;
   StreamSubscription? _recorderSubscription;
   Codec codecSelected = Codec.pcm16WAV;
+  File? _image;
 
   double _dbLevel = 0.0;
   String? _activeAudio;
@@ -100,16 +103,51 @@ class _RegisterSpeakerPageState extends State<RegisterSpeakerPage> {
                       SizedBox(height: 20),
                       AudioInstructionMessage(),
                       SizedBox(height: 20),
-                      RegisterSpeakerForm(
-                        onChanged: (value) {
-                          setState(() {
-                            speakerId = value;
-                          });
-                        },
-                        formKey: _formKey,
-                        controller: _controller,
-                        labelText: 'Nome',
-                        hintText: 'Digite o nome do usuário',
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start, // alinha topo
+                          children: [
+                            GestureDetector(
+                              onTap: _pickImage,
+                              child: ClipOval(
+                                child: _image != null
+                                    ? Image.file(
+                                        _image!,
+                                        width: 60,
+                                        height: 60,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Container(
+                                        width: 60,
+                                        height: 60,
+                                        color: Colors.grey[300],
+                                        child: Icon(
+                                          Icons.add_a_photo,
+                                          size: 30,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                              ),
+                            ),
+
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: RegisterSpeakerForm(
+                                onChanged: (value) {
+                                  setState(() {
+                                    speakerId = value;
+                                  });
+                                },
+                                formKey: _formKey,
+                                controller: _controller,
+                                labelText: 'Nome',
+                                hintText: 'Digite o nome do usuário',
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(height: 10),
                       RecordAudioCard(
@@ -262,8 +300,20 @@ class _RegisterSpeakerPageState extends State<RegisterSpeakerPage> {
       SendAudiosEvent(
         audio1Path: _audio1Dir!,
         audio2Path: _audio2Dir!,
+        profilePicturePath: _image != null ? _image!.path : "",
         speakerId: _controller.text,
       ),
     );
+  }
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
   }
 }

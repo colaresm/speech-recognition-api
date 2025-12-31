@@ -3,6 +3,7 @@ from services import audio_service
 from services import speaker_service
 from flask import request, jsonify
 import os
+import base64
 
 routes = Blueprint("routes", __name__)
 
@@ -66,6 +67,13 @@ def register_speaker():
     audio_1 = request.files["audio_1"]
     audio_2 = request.files["audio_2"]
 
+    profile_picture = request.files.get("profile_picture")
+    if profile_picture:
+      image_bytes = profile_picture.read()
+      image_base64 = base64.b64encode(image_bytes).decode('utf-8')
+    else:
+      image_base64 = "" 
+
     
     if not speaker_id:
         return jsonify({"error": "speaker_id é obrigatório"}), 400
@@ -77,13 +85,14 @@ def register_speaker():
         audio.save(path)
         paths.append(path)
 
+    
     inv_C, mean, std = audio_service.compute_data(paths)
-
     speaker_service.register_speaker_service(
         mean=mean,
         std=std,
         inv_C=inv_C,
-        speaker_id=speaker_id
+        speaker_id=speaker_id,
+        image_base64=image_base64
     )
 
     return jsonify({
@@ -114,8 +123,8 @@ def identify_speaker():
           properties:
             speaker_id:
               type: string
-            score:
-              type: number
+            identify_speaker:
+              type: string
     """
 
     if "audio" not in request.files:
@@ -125,13 +134,13 @@ def identify_speaker():
     path = f"/tmp/{audio_file.filename}"
     audio_file.save(path)
 
-    best_score,best_speaker = speaker_service.identify_speaker(path)
+    best_speaker,profile_picture = speaker_service.identify_speaker(path)
 
     os.remove(path)
 
     return jsonify({
         "speaker_id": best_speaker,
-        "score": round(best_score, 2)
+        "profile_picture": profile_picture
     })
 
 

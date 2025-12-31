@@ -19,9 +19,11 @@ class RegisterSpeakerBloc
   ) async {
     emit(RegisterSpeakerLoading());
     try {
+      
       await sendAudiosUseCase(
         audio1Path: event.audio1Path,
         audio2Path: event.audio2Path,
+        profilePicturePath: event.profilePicturePath,
         speakerId: event.speakerId,
       );
       emit(RegisterSpeakerSuccess("Usuário cadastrado com sucesso."));

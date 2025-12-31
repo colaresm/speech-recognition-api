@@ -1,12 +1,13 @@
 import numpy as np
 from database_layer.database import connection
-def register_speaker(mean,std,inv_C,speaker_id):
+def register_speaker(mean,std,inv_C,speaker_id,image_base64):
     db = connection()
     db.insert_one({
     "speaker_id": speaker_id,
     "mean": mean.tolist(),
     "std": std.tolist(),
-    "invC": inv_C.tolist()
+    "invC": inv_C.tolist(),
+    "profile_picture":image_base64
     })
 
 
@@ -33,5 +34,5 @@ def identify_speaker(X_mfcc):
         if total_dist < best_score:
             best_score = total_dist
             best_speaker = doc["speaker_id"]
-
-    return  best_score,best_speaker
+            profile_picture = doc["profile_picture"]
+    return  best_speaker,profile_picture

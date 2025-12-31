@@ -7,8 +7,9 @@ This repository stores a Python-based API, containerized with Docker and integra
 #  Graphical interface
 <p align = "center">
   <img src="docs/home.png" width="200" />
-  <img src="docs/register.png" width="200" />
   <img src="docs/login.png" width="200" />
+  <img src="docs/register.png" width="200" />
+  <img src="docs/profile.png" width="200" />
 </p>
 
 

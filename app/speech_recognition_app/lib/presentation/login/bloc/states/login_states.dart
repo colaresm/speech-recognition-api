@@ -7,7 +7,8 @@ class LoginLoading extends LoginState {}
 class LoginSuccess extends LoginState {
   final String message;
   final String speakerId;
-  LoginSuccess(this.message, this.speakerId);
+  final String profilePictureBase64;
+  LoginSuccess(this.message, this.speakerId, this.profilePictureBase64);
 }
 
 class LoginError extends LoginState {

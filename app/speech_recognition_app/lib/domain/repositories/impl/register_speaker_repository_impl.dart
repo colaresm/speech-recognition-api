@@ -12,11 +12,13 @@ class RegisterSpeakerRepositoryImpl
   Future<void> sendAudios({
     required String audio1Path,
     required String audio2Path,
+    required String profilePicturePath,
     required String speakerId,
   }) {
     return datasource.sendAudios(
       audio1Path: audio1Path,
       audio2Path: audio2Path,
+      profilePicturePath: profilePicturePath,
       speakerId: speakerId,
     );
   }

@@ -24,7 +24,7 @@ class AudioInstructionMessage extends StatelessWidget {
               isLogin
                   ? 'Para realizar o login via reconhecimento de voz, grave um áudio.'
                   : 'Para garantir a qualidade do reconhecimento de voz, '
-                        'grave dois áudios diferentes do mesmo locutor.',
+                        'grave dois áudios diferentes do mesmo usuário.',
               style: TextStyle(color: Colors.black, fontSize: 14),
             ),
           ),

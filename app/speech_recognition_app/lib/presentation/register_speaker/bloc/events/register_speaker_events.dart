@@ -1,14 +1,15 @@
-
-abstract class RegisterSpeakerEvent{}
+abstract class RegisterSpeakerEvent {}
 
 class SendAudiosEvent extends RegisterSpeakerEvent {
   final String audio1Path;
   final String audio2Path;
+  final String profilePicturePath;
   final String speakerId;
 
   SendAudiosEvent({
     required this.audio1Path,
     required this.audio2Path,
+    required this.profilePicturePath,
     required this.speakerId,
   });
 

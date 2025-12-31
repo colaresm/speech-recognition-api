@@ -4,6 +4,7 @@ class RegisterSpeakerRemoteDatasource {
   Future<void> sendAudios({
     required String audio1Path,
     required String audio2Path,
+    required String profilePicturePath,
     required String speakerId,
   }) async {
     final uri = Uri.parse('http://192.168.1.180:5001/register-speaker');
@@ -24,6 +25,16 @@ class RegisterSpeakerRemoteDatasource {
         filename: 'audio2.wav',
       ),
     );
+
+    if (profilePicturePath != "") {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'profile_picture',
+          profilePicturePath,
+          filename: 'profile_picture_$speakerId.png',
+        ),
+      );
+    }
 
     request.fields['speaker_id'] = speakerId;
 

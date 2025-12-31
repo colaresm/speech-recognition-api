@@ -43,6 +43,7 @@ dependencies:
   bloc: ^9.1.0
   get_it: ^9.2.0
   flutter_bloc: ^9.1.1
+  image_picker: ^1.2.1
 
 flutter_icons:
   ios: true

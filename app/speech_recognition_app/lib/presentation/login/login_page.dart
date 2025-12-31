@@ -75,7 +75,11 @@ class _LoginPageState extends State<LoginPage> {
           if (current is LoginSuccess) {
             AppToast.showSuccess("${current.message} ${current.speakerId}");
             isLoading = false;
-            redirectToHomePage(context);
+            redirectToPersonalPage(
+              context: context,
+              profilePictureBase64: current.profilePictureBase64,
+              speakerId: current.speakerId,
+            );
           }
           if (current is LoginError) {
             isLoading = false;
