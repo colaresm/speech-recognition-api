@@ -3,7 +3,10 @@
 This repository stores a Python-based API, containerized with Docker and integrated with MongoDB, focused on speaker recognition. The system extracts voice features using MFCC coefficients and performs identification through the Mahalanobis distance, comparing input audio samples with previously registered speaker profiles.
 
 # Technologies
-
+- Flutter/Dart;
+- Python;
+- MongoDB;
+- Docker.
 
 #  Overview
 This project uses a **Python-based API** containerized with **Docker**. When the application is started, the **MongoDB** and **mongo-express** containers are automatically created, providing an isolated and reproducible environment.
@@ -49,4 +52,5 @@ Use the following credentials to log in:
   <img src="docs/profile.png" width="200" />
 </p>
 
+# References
 
