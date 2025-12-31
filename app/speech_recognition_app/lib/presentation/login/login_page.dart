@@ -29,8 +29,6 @@ class _LoginPageState extends State<LoginPage> {
   bool _mRecorderIsInited = false;
   String? _mPath;
   String? _audio1Dir;
-  String? _audio2Dir;
-  String speakerId = "";
   bool isLoading = false;
   StreamSubscription? _recorderSubscription;
   Codec codecSelected = Codec.pcm16WAV;
@@ -63,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-          'Registrar voz'.toUpperCase(),
+          'Logar'.toUpperCase(),
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -93,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       SizedBox(height: 20),
-                      AudioInstructionMessage(),
+                      AudioInstructionMessage(isLogin: true,),
                       SizedBox(height: 20),
                       RecordAudioCard(
                         isActive: _activeAudio == "audio_1",
@@ -122,10 +120,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isActiveRegisterButton() {
     bool isNotRecording = !_mRecorder!.isRecording;
-    return isNotRecording &&
-        _audio1Dir != null &&
-        _audio2Dir != null &&
-        speakerId.isNotEmpty;
+    return isNotRecording && _audio1Dir != null;
   }
 
   Future<void> cancelRecorderSubscriptions() async {
@@ -143,9 +138,9 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _openRecorder() async {
     var status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {}
-    if (status.isPermanentlyDenied) {
-      await openAppSettings();
-    }
+    //  if (status.isPermanentlyDenied) {
+    //  await openAppSettings();
+    //}
     await _mRecorder!.openRecorder();
 
     _recorderSubscription = _mRecorder!.onProgress!.listen((e) {
@@ -188,9 +183,6 @@ class _LoginPageState extends State<LoginPage> {
 
     if (_activeAudio == "audio_1") {
       _audio1Dir = _mPath;
-    }
-    if (_activeAudio == "audio_2") {
-      _audio2Dir = _mPath;
     }
   }
 

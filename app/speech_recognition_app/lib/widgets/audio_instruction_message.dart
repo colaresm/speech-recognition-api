@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AudioInstructionMessage extends StatelessWidget {
-  const AudioInstructionMessage({super.key});
+  final bool isLogin;
+  const AudioInstructionMessage({super.key, this.isLogin = false});
 
   @override
   Widget build(BuildContext context) {
@@ -15,20 +16,16 @@ class AudioInstructionMessage extends StatelessWidget {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Icon(
-            Icons.info_outline,
-            color: Colors.black,
-          ),
+        children: [
+          Icon(Icons.info_outline, color: Colors.black),
           SizedBox(width: 10),
           Expanded(
             child: Text(
-              'Para garantir a qualidade do reconhecimento de voz, '
-              'grave dois áudios diferentes do mesmo locutor.',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 14,
-              ),
+              isLogin
+                  ? 'Para realizar o login via reconhecimento de voz, grave um áudio.'
+                  : 'Para garantir a qualidade do reconhecimento de voz, '
+                        'grave dois áudios diferentes do mesmo locutor.',
+              style: TextStyle(color: Colors.black, fontSize: 14),
             ),
           ),
         ],

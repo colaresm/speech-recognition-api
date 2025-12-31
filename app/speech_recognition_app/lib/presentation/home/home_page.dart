@@ -20,9 +20,7 @@ class HomePage extends StatelessWidget {
               text: "Logar",
               width: buttonWidth,
               isActive: true,
-              onPressed: () {
-                print("logar");
-              },
+              onPressed: () => redirectToLoginPage(context),
             ),
             const SizedBox(height: 20),
             Row(
@@ -50,15 +48,12 @@ class HomePage extends StatelessWidget {
         ),
       ),
 
-      bottomNavigationBar:  Padding(
+      bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 16),
         child: Text(
           "developed by Marcelo Colares".toUpperCase(),
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 12,
-          ),
+          style: TextStyle(color: Colors.grey, fontSize: 12),
         ),
       ),
     );
