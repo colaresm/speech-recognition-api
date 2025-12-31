@@ -59,8 +59,8 @@ def register_speaker():
               type: string
     """
   
-   # if "audio_1" not in request.files or "audio_2" not in request.files:
-    #    return jsonify({"error": "Envie dois arquivos de áudio"}), 400
+    if "audio_1" not in request.files or "audio_2" not in request.files:
+        return jsonify({"error": "Envie dois arquivos de áudio"}), 400
   
     speaker_id = request.form.get("speaker_id")
     audio_1 = request.files["audio_1"]

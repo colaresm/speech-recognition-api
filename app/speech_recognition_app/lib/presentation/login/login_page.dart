@@ -4,8 +4,9 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_recognition_app/domain/dependency_injection.dart';
-import 'package:speech_recognition_app/presentation/register_speaker/bloc/register_speaker_bloc.dart';
-import 'package:speech_recognition_app/presentation/register_speaker/bloc/states/register_speaker_states.dart';
+import 'package:speech_recognition_app/presentation/login/bloc/events/login_speaker_events.dart';
+import 'package:speech_recognition_app/presentation/login/bloc/login_bloc.dart';
+import 'package:speech_recognition_app/presentation/login/bloc/states/login_states.dart';
 import 'package:speech_recognition_app/utils/routes.dart';
 import 'package:speech_recognition_app/utils/toast.dart';
 import 'package:speech_recognition_app/widgets/audio_instruction_message.dart';
@@ -23,7 +24,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late final RegisterSpeakerBloc _registerSpeakerBloc;
+  late final LoginBloc _loginBloc;
 
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mRecorderIsInited = false;
@@ -39,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   StreamController<List<int>> webStreamController = StreamController();
   @override
   void initState() {
-    _registerSpeakerBloc = getDependency<RegisterSpeakerBloc>();
+    _loginBloc = getDependency<LoginBloc>();
     super.initState();
     setCodec(Codec.pcmFloat32);
     _openRecorder();
@@ -68,15 +69,15 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      body: BlocBuilder<RegisterSpeakerBloc, RegisterSpeakerState>(
-        bloc: _registerSpeakerBloc,
+      body: BlocBuilder<LoginBloc, LoginState>(
+        bloc: _loginBloc,
         buildWhen: (previous, current) {
-          if (current is RegisterSpeakerSuccess) {
-            AppToast.showSuccess(current.message);
+          if (current is LoginSuccess) {
+            AppToast.showSuccess("${current.message} ${current.speakerId}");
             isLoading = false;
             redirectToHomePage(context);
           }
-          if (current is RegisterSpeakerError) {
+          if (current is LoginError) {
             isLoading = false;
             AppToast.showError(current.message);
           }
@@ -91,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       SizedBox(height: 20),
-                      AudioInstructionMessage(isLogin: true,),
+                      AudioInstructionMessage(isLogin: true),
                       SizedBox(height: 20),
                       RecordAudioCard(
                         isActive: _activeAudio == "audio_1",
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                         text: "Logar",
                         isActive: _isActiveRegisterButton(),
                         isLoading: isLoading,
-                        onPressed: () => _onPressRegister(),
+                        onPressed: () => _onPressLogin(),
                         width: constraints.maxWidth * 0.95,
                       ),
                     ],
@@ -224,7 +225,8 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _onPressRegister() {
+  void _onPressLogin() {
     isLoading = true;
+    _loginBloc.add(SendAudioEvent(audio1Path: _audio1Dir!));
   }
 }

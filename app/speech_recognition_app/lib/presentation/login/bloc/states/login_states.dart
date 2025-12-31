@@ -1,15 +1,16 @@
 abstract class LoginState {}
 
-class RegisterSpeakerInitial extends LoginState {}
+class LoginInitial extends LoginState {}
 
-class RegisterSpeakerLoading extends LoginState {}
+class LoginLoading extends LoginState {}
 
-class RegisterSpeakerSuccess extends LoginState {
+class LoginSuccess extends LoginState {
   final String message;
-  RegisterSpeakerSuccess(this.message);
+  final String speakerId;
+  LoginSuccess(this.message, this.speakerId);
 }
 
-class RegisterSpeakerError extends LoginState {
+class LoginError extends LoginState {
   final String message;
-  RegisterSpeakerError(this.message);
+  LoginError(this.message);
 }

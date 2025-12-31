@@ -1,34 +1,29 @@
-
 import 'package:bloc/bloc.dart';
-import 'package:speech_recognition_app/domain/usecases/send_audios_usecase.dart';
+import 'package:speech_recognition_app/domain/usecases/send_audio_usecase.dart';
 import 'package:speech_recognition_app/presentation/login/bloc/events/login_speaker_events.dart';
 import 'package:speech_recognition_app/presentation/login/bloc/states/login_states.dart';
-import 'package:speech_recognition_app/presentation/register_speaker/bloc/events/register_speaker_events.dart';
-import 'package:speech_recognition_app/presentation/register_speaker/bloc/states/register_speaker_states.dart';
 
-class LoginBloc
-    extends Bloc<LoginEvent, LoginState> {
-  final SendAudiosUseCase sendAudiosUseCase; //TODO: SOLVE THIS!
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  final SendAudioUseCase sendAudioUseCase;
 
-  LoginBloc(this.sendAudiosUseCase)
-    : super(LoginInitial()) {
-    on<SendAudioEvent>(_onSendAudios);
+  LoginBloc(this.sendAudioUseCase) : super(LoginInitial()) {
+    on<SendAudioEvent>(_onSendAudio);
   }
 
-  Future<void> _onSendAudios(
-    SendAudiosEvent event,
-    Emitter<RegisterSpeakerState> emit,
+  Future<void> _onSendAudio(
+    SendAudioEvent event,
+    Emitter<LoginState> emit,
   ) async {
-    emit(RegisterSpeakerLoading());
+    emit(LoginLoading());
+
     try {
-      await sendAudiosUseCase(
+      final String speakerId = await sendAudioUseCase(
         audio1Path: event.audio1Path,
-        audio2Path: event.audio2Path,
-        speakerId: event.speakerId,
       );
-      emit(RegisterSpeakerSuccess("Login realizado com sucesso."));
+
+      emit(LoginSuccess("Login realizado com sucesso", speakerId));
     } catch (e) {
-      emit(RegisterSpeakerError("Servidor indisponível. Tente novamente."));
+      emit(LoginError("Servidor indisponível. Tente novamente."));
     }
   }
 }
