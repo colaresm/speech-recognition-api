@@ -40,7 +40,7 @@ The **mongo-express** web interface can be accessed at:
 Use the following credentials to log in:
 
 - **Username:** `admin`  
-- **Password:** `password`
+- **Password:** `admin`
 
 
 

@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterSpeakerRemoteDatasource {
@@ -7,7 +8,8 @@ class RegisterSpeakerRemoteDatasource {
     required String profilePicturePath,
     required String speakerId,
   }) async {
-    final uri = Uri.parse('http://192.168.1.180:5001/register-speaker');
+    final baseUrl = dotenv.env['BASE_URL']!;
+    final uri = Uri.parse('$baseUrl/register-speaker');
     final request = http.MultipartRequest('POST', uri);
 
     request.files.add(
