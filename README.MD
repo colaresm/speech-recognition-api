@@ -56,8 +56,30 @@ The graphical interface for speaker registration and login is implemented throug
   <img src="docs/login.png" width="200" />
   <img src="docs/profile.png" width="200" />
 </p>
-# Future work
 
+## Run the App
+- Install Dependencies
+```
+flutter pub get
+```
+
+- Configure Backend URL, in the `.env` (in app folder) change:
+
+```
+BASE_URL=http://YOUR_BACKEND_IP:PORT
+```
+- Connect a Device or Start an Emulator, Check available devices:
+```
+flutter devices
+```
+
+- To run on a specific device:
+```
+flutter run -d <device_id>
+```
+
+# Disclaimer
+This project uses Mahalanobis distance for voice-based user recognition and assumes all inputs belong to registered users. As a result, unknown users may be incorrectly authenticated. The system is not production-ready and was developed solely for experimental and research purposes.
 
 # References
 - https://medium.com/@MuhyEddin/feature-extraction-is-one-of-the-most-important-steps-in-developing-any-machine-learning-or-deep-94cf33a5dd46

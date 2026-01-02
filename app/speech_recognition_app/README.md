@@ -24,6 +24,26 @@ Users can register as speakers by recording their voice, and later log in using 
 - **Audio recording and playback**
 - **Mobile platforms**: Android and iOS
 
+## Run the Project
+- Install Dependencies
+```
+flutter pub get
+```
+
+- Configure Backend URL, in the `.env` change:
+
+```
+BASE_URL=http://YOUR_BACKEND_IP:PORT
+```
+- Connect a Device or Start an Emulator, Check available devices:
+```
+flutter devices
+```
+
+- To run on a specific device:
+```
+flutter run -d <device_id>
+```
 
 ## Pages
 
