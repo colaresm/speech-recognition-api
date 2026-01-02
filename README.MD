@@ -8,6 +8,17 @@ This repository stores a Python-based API, containerized with Docker and integra
 - MongoDB;
 - Docker.
 
+#  Project Structure
+
+```text
+├── api/                      # Backend processing and authentication
+├── app/
+│   └── speech_recognition_app/  # Flutter mobile application
+├── docs/                     # Images for Readme
+├── .gitignore
+├── docker-compose.yaml       # Docker services configuration
+└── README.md
+```
 #  Overview
 This project uses a **Python-based API** containerized with **Docker**. When the application is started, the **MongoDB** and **mongo-express** containers are automatically created, providing an isolated and reproducible environment.
 
