@@ -3,8 +3,8 @@
 This repository stores a Python-based API, containerized with Docker and integrated with MongoDB, focused on speaker recognition. The system extracts voice features using MFCC coefficients and performs identification through the Mahalanobis distance, comparing input audio samples with previously registered speaker profiles.
 
 # Technologies
-- Flutter/Dart;
-- Python;
+- Dart/Flutter;
+- Python/Flask;
 - MongoDB;
 - Docker.
 
@@ -56,6 +56,8 @@ The graphical interface for speaker registration and login is implemented throug
   <img src="docs/login.png" width="200" />
   <img src="docs/profile.png" width="200" />
 </p>
+# Future work
+
 
 # References
 - https://medium.com/@MuhyEddin/feature-extraction-is-one-of-the-most-important-steps-in-developing-any-machine-learning-or-deep-94cf33a5dd46

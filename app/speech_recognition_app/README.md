@@ -1,16 +1,35 @@
-# speech_recognition_app
+#  Speech Recognition Login Mobile App  
 
-A new Flutter project.
+This project is a **mobile application developed in Flutter** that performs **user authentication based on voice recognition**.  
+Users can register as speakers by recording their voice, and later log in using voice authentication to access a personalized screen.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+##  Features
 
-A few resources to get you started if this is your first Flutter project:
+-  **Speaker Registration**
+  - Users register by recording their voice
+  - Audio samples are sent to a backend service for processing
+-  Clean and Modular Flutter Architecture**
+  - Separation of UI, logic, and data layers
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+##  Technologies Used
+
+- **Flutter**: `3.38.5`
+- **Dart**
+- **REST API communication** (for speaker registration and authentication)
+- **Audio recording and playback**
+- **Mobile platforms**: Android and iOS
+
+
+## Pages
+
+<p align = "center">
+  <img src="../../docs/home.png" width="200" />
+  <img src="../../docs/register.png" width="200" />
+  <img src="../../docs/login.png" width="200" />
+  <img src="../../docs/profile.png" width="200" />
+</p>
