@@ -27,7 +27,9 @@ The API will be available at the following address:
 
 - **API / Documentation (Swagger):**  
   http://localhost:5001/apidocs/#/
-
+<p align = "center">
+  <img src="docs/docs.png" style="max-width: 100%; height: auto;" />
+</p>
 The interactive documentation allows you to explore the available endpoints and make requests directly through the interface.
 
 ## Mongo Express Access
@@ -36,15 +38,18 @@ The **mongo-express** web interface can be accessed at:
 
 - **Mongo Express:**  
   http://localhost:8081/
-
+<p align = "center">
+  <img src="docs/mongo_express.png" style="max-width: 100%; height: auto;" />
+</p>
 Use the following credentials to log in:
 
 - **Username:** `admin`  
-- **Password:** `admin`
+- **Password:** `admin123`
 
 
 
 #  Graphical interface
+The graphical interface for speaker registration and login is implemented through a mobile application developed using the Dart programming language and the Flutter framework.
 <p align = "center">
   <img src="docs/home.png" width="200" />
   <img src="docs/register.png" width="200" />
@@ -53,4 +58,6 @@ Use the following credentials to log in:
 </p>
 
 # References
+- https://medium.com/@MuhyEddin/feature-extraction-is-one-of-the-most-important-steps-in-developing-any-machine-learning-or-deep-94cf33a5dd46
+-  https://www.cfholbert.com/blog/outlier_mahalanobis_distance/
 
