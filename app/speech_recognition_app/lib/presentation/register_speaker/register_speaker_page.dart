@@ -205,9 +205,9 @@ class _RegisterSpeakerPageState extends State<RegisterSpeakerPage> {
   Future<void> _openRecorder() async {
     var status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {}
-    if (status.isPermanentlyDenied) {
-      await openAppSettings();
-    }
+    //   if (status.isPermanentlyDenied) {
+    //   await openAppSettings();
+    //}
     await _mRecorder!.openRecorder();
 
     _recorderSubscription = _mRecorder!.onProgress!.listen((e) {
