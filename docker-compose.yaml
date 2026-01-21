@@ -40,6 +40,7 @@ services:
       - "5001:5001"
     environment:
       MONGO_URI: mongodb://admin:admin123@mongo:27017/?authSource=admin
+      MONGO_DB:  speakers
     depends_on:
       mongo:
         condition: service_healthy
